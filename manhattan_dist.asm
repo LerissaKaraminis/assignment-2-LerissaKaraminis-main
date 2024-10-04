@@ -228,6 +228,11 @@ Finish
 CHAT
 
 HALT
+
+Point_A_Wins .STRINGZ "The player is closer to point A"
+Point_B_Wins .STRINGZ "The player is closer to point B"
+Points_Are_Equal .STRINGZ "The player is equally far from both points"
+
 A_X .FILL #1
 A_Y .FILL #2
 A_Z .FILL #3
@@ -236,28 +241,24 @@ B_Y .FILL #32
 B_Z .FILL #-8
 
 ;not variables
-Not_A_X .FILL x3100
-Not_A_Y .FILL x3101
-Not_A_Z .FILL x3102
-Not_B_X .FILL x3103
-Not_B_Y .FILL x3104
-Not_B_Z .FILL x3105
+Not_A_X .FILL x4100
+Not_A_Y .FILL x4101
+Not_A_Z .FILL x4102
+Not_B_X .FILL x4103
+Not_B_Y .FILL x4104
+Not_B_Z .FILL x4105
 
 ;player poitions - points
-Player_Xpos_Minus_A_X .FILL x3106
-Player_Ypos_Minus_A_Y .FILL x3107
-Player_Zpos_Minus_A_Z .FILL x3108
+Player_Xpos_Minus_A_X .FILL x4106
+Player_Ypos_Minus_A_Y .FILL x4107
+Player_Zpos_Minus_A_Z .FILL x4108
 
-Player_Xpos_Minus_B_X .FILL x3109
-Player_Ypos_Minus_B_Y .FILL x310A
-Player_Zpos_Minus_B_Z .FILL x310B
+Player_Xpos_Minus_B_X .FILL x4109
+Player_Ypos_Minus_B_Y .FILL x410A
+Player_Zpos_Minus_B_Z .FILL x410B
 
 ;manhattan points
-A_PointManhattan .FILL x310C
-B_PointManhattan .FILL x310D
-
-Point_A_Wins .STRINGZ "The player is closer to point A"
-Point_B_Wins .STRINGZ "The player is closer to point B"
-Points_Are_Equal .STRINGZ "The player is equally far from both points"
+A_PointManhattan .FILL x410C
+B_PointManhattan .FILL x410D
 
 .END
