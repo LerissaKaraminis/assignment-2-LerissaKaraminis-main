@@ -54,5 +54,3 @@ AIR_ID .FILL #0     ;air block ID
 SIXTEEN .FILL #16   ;loop counter value
 
 .END
-
-

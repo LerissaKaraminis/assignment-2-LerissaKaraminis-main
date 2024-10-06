@@ -1,0 +1,118 @@
+.ORIG x3000
+
+;clear registers
+AND R0, R0, #0      ;x coord
+AND R1, R1, #0      ;y coord
+AND R2, R2, #0      ;z coord
+AND R3, R3, #0 
+AND R4, R4, #0 
+AND R5, R5, #0 
+AND R6, R6, #0 
+
+;get and store the player x and z coords
+TRAP 0x29
+STI R0, PLAYER_X_COORD
+STI R2, PLAYER_Z_COORD
+
+;get the highest non-air block
+TRAP 0x2D
+STI R1, PLAYER_Y_COORD
+
+;NOT the y coordinate
+LDI R5, PLAYER_Y_COORD
+NOT R5, R5
+ADD R5, R5, #1 
+
+;put the air block ID into R3
+LD R3, AIR_BLOCK_ID
+
+;top left
+AND R0, R0, #0
+AND R2, R2, #0
+LDI R0, PLAYER_X_COORD
+LDI R2, PLAYER_Z_COORD
+ADD R0, R0, #-1
+ADD R2, R2, #-1
+JSR REMOVE
+
+;top middle
+AND R0, R0, #0
+AND R2, R2, #0
+LDI R0, PLAYER_X_COORD
+LDI R2, PLAYER_Z_COORD
+ADD R2, R2, #-1
+JSR REMOVE
+
+;top right
+AND R0, R0, #0
+AND R2, R2, #0
+LDI R0, PLAYER_X_COORD
+LDI R2, PLAYER_Z_COORD
+ADD R0, R0, #1
+ADD R2, R2, #-1
+JSR REMOVE
+
+;left
+AND R0, R0, #0
+AND R2, R2, #0
+LDI R0, PLAYER_X_COORD
+LDI R2, PLAYER_Z_COORD
+ADD R0, R0, #-1
+JSR REMOVE
+
+;right
+AND R0, R0, #0
+AND R2, R2, #0
+LDI R0, PLAYER_X_COORD
+LDI R2, PLAYER_Z_COORD
+ADD R0, R0, #1
+JSR REMOVE
+
+;bottom left
+AND R0, R0, #0
+AND R2, R2, #0
+LDI R0, PLAYER_X_COORD
+LDI R2, PLAYER_Z_COORD
+ADD R0, R0, #-1
+ADD R2, R2, #1
+JSR REMOVE
+
+;bottom middle
+AND R0, R0, #0
+AND R2, R2, #0
+LDI R0, PLAYER_X_COORD
+LDI R2, PLAYER_Z_COORD
+ADD R2, R2, #1
+JSR REMOVE
+
+;bottom right
+AND R0, R0, #0
+AND R2, R2, #0
+LDI R0, PLAYER_X_COORD
+LDI R2, PLAYER_Z_COORD
+ADD R0, R0, #1
+ADD R2, R2, #1
+JSR REMOVE
+
+HALT
+
+REMOVE
+AND R6, R6, #0
+AIR_LOOP
+TRAP 0x2D
+ADD R1, R1, R5   ;Current highest non-air block minus PLAYER_Y_COORD
+BRnz FINISH      ;if current block height is less than or greater than player Y coord, exit loop
+TRAP 0x2D
+TRAP 0x2C
+BRzp AIR_LOOP
+FINISH
+RET
+
+PLAYER_X_COORD .FILL x4100
+PLAYER_Y_COORD .FILL x4101
+PLAYER_Z_COORD .FILL x4102
+
+AIR_BLOCK_ID .FILL #0
+COBBLESTONE_ID .FILL #4
+
+.END
